@@ -54,46 +54,57 @@ class Solution(object):
         return -1
 
     # 思路3：官方解法：双指针 - 线性时间复杂度(m-n)*n
-    class Solution:
-        def strStr3(self, haystack: str, needle: str) -> int:
-            L, n = len(needle), len(haystack)
-            if L == 0:
-                return 0
 
-            pn = 0
-            # 这里限制了外层循环不超过 n-L+1
-            while pn < n - L + 1:
-                # find the position of the first needle character
-                # in the haystack string
-                # 寻找第一位相等的字符
-                while pn < n - L + 1 and haystack[pn] != needle[0]:
-                    pn += 1
+    def strStr3(self, haystack: str, needle: str) -> int:
+        L, n = len(needle), len(haystack)
+        if L == 0:
+            return 0
 
-                # compute the max match string
-                # 记录当前匹配长度和子串指针
-                curr_len = pL = 0
-                # 寻找第二个及之后相等的字符
-                while pL < L and pn < n and haystack[pn] == needle[pL]:
-                    pn += 1
-                    pL += 1
-                    curr_len += 1
+        pn = 0
+        # 这里限制了外层循环不超过 n-L+1
+        while pn < n - L + 1:
+            # find the position of the first needle character
+            # in the haystack string
+            # 寻找第一位相等的字符
+            while pn < n - L + 1 and haystack[pn] != needle[0]:
+                pn += 1
 
-                # if the whole needle string is found,
-                # return its start position
-                # 如果完全匹配，则返回index
-                if curr_len == L:
-                    return pn - L
+            # compute the max match string
+            # 记录当前匹配长度和子串指针
+            curr_len = pL = 0
+            # 寻找第二个及之后相等的字符
+            while pL < L and pn < n and haystack[pn] == needle[pL]:
+                pn += 1
+                pL += 1
+                curr_len += 1
 
-                # otherwise, backtrack
-                pn = pn - curr_len + 1
+            # if the whole needle string is found,
+            # return its start position
+            # 如果完全匹配，则返回index
+            if curr_len == L:
+                return pn - L
 
+            # otherwise, backtrack
+            pn = pn - curr_len + 1
+
+        return -1
+
+    # 思路4: 滚动hash 时间复杂度O(n-l)
+    def strStr4(self, haystack, needle):
+        n,l = len(haystack), len(needle)
+        if l > n:
             return -1
-
-    # 思路4: 滚动hash
-
+        needle_hash = hash(needle)
+        for i in range(n-l+1):
+            str_hash = hash(haystack[i:i+l])
+            if str_hash == needle_hash:
+                return i
+        return -1
+    
     # 思路5: KMP
+
 
 
 if __name__=='__main__':
     s = Solution()
-    s.strStr1("mississippi", "issipi")
+    print(s.strStr4("a", "a"))
