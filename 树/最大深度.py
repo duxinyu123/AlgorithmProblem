@@ -17,8 +17,10 @@ class Solution(object):
             left_height = self.maxDepth(root.left)
             right_height = self.maxDepth(root.right)
             return max(left_height, right_height) + 1
+
     # 2. 广度优先遍历
     def maxDepth1(self, root):
+        pass
 
 
 class TreeNode(object):
