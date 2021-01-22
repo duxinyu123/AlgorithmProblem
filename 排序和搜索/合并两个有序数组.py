@@ -22,6 +22,27 @@ class Solution(object):
                     break
         return nums1
 
-    # 2. 从后往前排序
+    # 2. 从后往前排序 O(m+n)
     def merge1(self, nums1, m, nums2, n):
-        pass
+        i,j = m-1,n-1
+        k = len(nums1) - 1
+        while k >= 0:
+            if i >= 0 and j >= 0:
+                if nums1[i] < nums2[j]:
+                    nums1[k] = nums2[j]
+                    j -= 1
+                else:
+                    nums1[k] = nums1[i]
+                    i -= 1
+            elif i >= 0:
+                nums1[k] = nums1[i]
+                i -= 1
+            elif j >= 0:
+                nums1[k] = nums2[j]
+                j -= 1
+            k -= 1
+        return nums1
+
+
+
+
